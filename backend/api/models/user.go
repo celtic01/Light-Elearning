@@ -1,15 +1,26 @@
 package model
 
 import (
+	"html"
+	"strings"
+	"time"
+
 	"github.com/celtic01/Light-Elearning/api/security"
 	gorm "gorm.io/gorm"
 )
 
 type User struct {
-	gorm.Model
-	Password string `gorm:"size:100; not null;"`
-	Email    string `gorm:"size:100; not null; unique"`
-	Username string `gorm:"size:255; not null; unique"`
+	ID        uint32    `gorm:"primary_key;auto_increment" json:"id"`
+	CreatedAt time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at"`
+	UpdatedAt time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at"`
+	Password  string    `gorm:"size:100; not null;"`
+	Email     string    `gorm:"size:100; not null; unique"`
+	Username  string    `gorm:"size:255; not null; unique"`
+}
+
+func (u *User) Prepare() {
+	u.Username = html.EscapeString(strings.TrimSpace(u.Username))
+	u.Email = html.EscapeString(strings.TrimSpace(u.Email))
 }
 
 func (u *User) BeforeSave(tx *gorm.DB) (err error) {

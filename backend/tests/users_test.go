@@ -1,7 +1,6 @@
 package tests
 
 import (
-	"fmt"
 	"testing"
 
 	model "github.com/celtic01/Light-Elearning/api/models"
@@ -70,7 +69,6 @@ func TestUpdateUser(t *testing.T) {
 	require.Equal(t, updatedUser.ID, user.ID)
 	require.Equal(t, updatedUser.Username, userUpdate.Username)
 	require.Equal(t, updatedUser.Email, userUpdate.Email)
-	fmt.Printf("%s,%s", updatedUser.Password, userUpdate.Password)
 	require.Equal(t, updatedUser.Password, userUpdate.Password)
 }
 
